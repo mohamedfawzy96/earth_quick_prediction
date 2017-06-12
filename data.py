@@ -46,4 +46,6 @@ def get_dataset():
 	dataframe1 = remove_empty_features(dataframe, empty_features_list)
 	dataframe1 = change_categories_into_numbers(dataframe1)
 	dataframe1 = change_date_format(dataframe1)
-	return np.array(dataframe1)
+	Y = np.array(dataframe1.loc[:,"Magnitude"])
+	X = np.array(dataframe1.drop(["Magnitude"], axis=1))
+	return X, Y
