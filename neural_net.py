@@ -3,12 +3,14 @@ from preprocessing import preprocess
 from data import get_dataset
 from sklearn.metrics import r2_score
 
+# Activation Functions sigmoid
 def nonlin(x,deriv=False):
 	if(deriv==True):
 	    return x*(1-x)
 
 	return 1/(1+np.exp(-x))
 
+# Activation Functions relu
 def relu(x, deriv=False):
         if deriv:
             return np.ones_like(x) * (x > 0)
@@ -52,6 +54,7 @@ for i in range(100000):
 	w1 += l1.T.dot(l2_delta)
 	w0 += l0.T.dot(l1_delta)
 
+# predict magnitude of inputs
 def predict(X1):
 	l00 = X1
 	l11 = nonlin(np.dot(l00, w0))
@@ -59,6 +62,7 @@ def predict(X1):
 	l33 = relu(np.dot(l22, w2))
 	return l33
 
+# Mean error 
 error = y_test - predict(X_test)
 print np.mean(np.abs(error))
 
