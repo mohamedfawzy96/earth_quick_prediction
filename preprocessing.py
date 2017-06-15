@@ -1,11 +1,15 @@
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
+from sklearn.decomposition import PCA
 
 # scaled the data to have a mean around 0
-def sacler(X):
+def sacler(X_train, X_test):
 	 min_max_scaler = MinMaxScaler()
-	 X = min_max_scaler.fit_transform(X)
-	 return X
+	 min_max_scaler.fit(X_train)
+	 X_train = min_max_scaler.transform(X_train)
+	 X_test = min_max_scaler.transform(X_test)
+
+	 return X_train, X_test
 
 # split the data to training and testing sets
 def split_train_test(X,Y):
@@ -14,6 +18,8 @@ def split_train_test(X,Y):
 
 # returning preprocossed data
 def preprocess(X,Y):
-	X = sacler(X)
+	pca = PCA(n_components=10)
 	X_train, X_test, y_train, y_test = split_train_test(X, Y)
+	pca.fit(X_train)
+	X_train, X_test = sacler(X_train, X_test)
 	return X_train, X_test, y_train, y_test
